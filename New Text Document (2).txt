@@ -1,0 +1,104 @@
+import { StatusBar } from 'expo-status-bar';
+import React from 'react';
+import { StyleSheet, Text, View ,SafeAreaView ,TextInput,Platform,Image,Dimensions,ScrollView,FlatList} from 'react-native';
+import { SwipeListView } from 'react-native-swipe-list-view';
+import ItemBox from './ItemBox';
+
+//import Category from "Category";
+import Icon from 'react-native-vector-icons/Ionicons'
+//import { S } from "react-native";
+const {height,width}=Dimensions.get('window')
+import firebaseDb from "./FirebaseApi"
+import {Button,Content,List,ListItem } from 'native-base';
+
+export default class App extends React.Component {
+  constructor(props){
+	const DATA=[
+	{id:1,name:"Narottam"},
+	{id:2,name:"Nar"},
+	{id:3,name:"Nar"},
+	{id:4,name:"Naro"},
+	{id:5,name:"Narot"},
+	{id:6,name:"Narott"},
+	];
+    console.log("hi");
+    super(props);
+ 
+    this.state= {
+	listviewData:DATA      ,
+name:"",
+      contact:[],file:"",uri:" ",ona:false,
+    }};
+  componentDidMount() {
+    this.startHeaderHeight = 80;
+    if (Platform.OS == 'android') {
+        this.startHeaderHeight = 100 + StatusBar.currentHeight
+    }
+	const deleteItem=(index)=>{
+		const arr = [...lists];arr.splice(index,1);setLists(arr);
+	}
+};
+render(){
+  return (
+    <SafeAreaView style={{ flex: 1 }}>
+    <View style={{ flex: 1 }}>
+        <View style={{ height: this.startHeaderHeight, backgroundColor: 'white', borderBottomWidth: 1, borderBottomColor: '#dddddd' }}>
+           <View style={{
+               flexDirection: 'row', padding: 10,
+               backgroundColor: 'white', marginHorizontal: 20,
+               shadowOffset: { width: 0, height: 0 },
+               shadowColor: 'black',
+               shadowOpacity: 0.2,
+               elevation: 1,
+               marginTop: Platform.OS == 'android' ? 30 : null
+           }}>
+               <Icon name="ios-search" size={20} style={{ marginRight: 10 }} /> 
+               <TextInput
+                   underlineColorAndroid="transparent"
+                   placeholder="Try New Delhi"
+                   placeholderTextColor="grey"
+                   style={{ flex: 1, fontWeight: '700', backgroundColor: 'white' }}
+               />
+           </View>
+           </View>
+       </View>
+<Content>
+	
+	<FlatList data={this.state.listviewData} 
+	renderItem={({item,index})=>{
+		return <ItemBox data={item} handleDelete={()=>deleteItem(index)}/>
+	}}
+	ItemSeperatorComponent={()=>{
+		<View style={styles.seperatorLine}></View>
+	}}
+/>
+
+</Content>
+    </SafeAreaView>
+    /*   <View style={{ flex: 1 }}>
+     
+
+              <View style={{marginTop:40,paddingHorizontal:20}}>
+                <Text style={{fontSize:24,fontWeight:'700'}}>Introducing AirBNB Pluss</Text>
+                <Text style={{marginTop:10,fontWeight:'100'}}>A new selection for hotels</Text>
+                  <View style={{width:width-40,height:200,marginTop:20}}> 
+                    <Image source={require('./images/1.jpg')} style={{flex:1,height:null,width:null,resizeMode:'cover',borderRadius:5,borderWidth:1,borderColor:'#dddddd'}}/>
+                  </View>
+              </View>
+       
+    </View> */
+              
+
+  );
+}
+}
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },seperatorLine:{
+	height:1,
+	}
+});
