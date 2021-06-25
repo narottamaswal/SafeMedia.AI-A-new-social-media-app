@@ -12,3 +12,4 @@ Proposed System:
 6) Users can forget about fake security and vulgar contents thereby enjoying a more safer and secure social media experience.
 
 ![alt tag](https://github.com/narottamaswal/Social-Media-App-with-AI/blob/main/images/WhatsApp%20Image%202021-05-13%20at%204.19.09%20PM%20(1).jpeg)
+![alt tag](https://github.com/narottamaswal/Social-Media-App-with-AI/blob/main/images/WhatsApp%20Image%202021-05-13%20at%204.19.09%20PM.jpeg)
