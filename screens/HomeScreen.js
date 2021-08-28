@@ -1,8 +1,14 @@
 import React,{useState,useContext,useEffect} from 'react'
-import {Text,View,StyleSheet} from 'react-native';
+import {Text,View,StyleSheet,FlatList} from 'react-native';
 import FormButton from '../components/FormButton';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as firebase from 'firebase';
+
+import {Container} from '../styles/FeedStyles';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+
+
+
 
 const HomeScreen=({navigation})=>{
 console.log("yede");
@@ -25,14 +31,16 @@ const logout=()=>{
 	});
 }
 return(
+
+
     <View style={styles.container}>
 	    <Text style={styles.text2}>Home</Text>
         <Text style={styles.text}>Welcome, Narottam</Text>
         <Text style={styles.text}>@Narottam18</Text>
 
 	<FormButton buttonTitle='Logout' onPress={()=>logout()}/>
-    </View>
-)
+
+    </View>)
 }
 export default HomeScreen;
 const styles=StyleSheet.create({
