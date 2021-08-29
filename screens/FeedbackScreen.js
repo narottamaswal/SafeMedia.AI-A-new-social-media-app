@@ -1,13 +1,26 @@
-import React from 'react';
+import { Button } from 'native-base';
+import React,{useContext} from 'react';
 import {Text,View,StyleSheet} from 'react-native';
 import FormButton from '../components/FormButton';
+import {AuthContext} from '../navigation/AuthProvider';
 const FeedbackScreen=({navigation})=>{
+
 console.log("yede");
 console.log(navigation);
+
+const logout=()=>{
+  navigation.replace('AppStack');
+  AsyncStorage.getItem('logined').then(value=>{
+    if(value){
+      AsyncStorage.setItem('logined','trfalseue');
+      setIsFirstLaunch(true);
+    }
+  });
+}
 return(
     <View style={styles.container}>
-	    <Text style={styles.text2}>Feed screen</Text>
-       
+	    <Text style={styles.text2} >Feed screen </Text>
+       <Button onPress={logout} ><Text>hello</Text></Button>
     </View>
 )
 }

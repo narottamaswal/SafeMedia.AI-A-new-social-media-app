@@ -11,6 +11,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {NavigationContainer} from '@react-navigation/native';
 import HomeScreen from '../screens/HomeScreen';
+import {AuthContext} from '../navigation/AuthProvider';
 
 import HomeScreen2 from '../screens/HomeScreen2';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -27,19 +28,18 @@ const Stack = createStackNavigator();
 const FeedStack = ({navigation}) => (
   <Stack.Navigator>
     <Stack.Screen
-      name="RN Social"
-      component={HomeScreen2}
+      name="SOCIAL"
+      component={HomeScreen2} 
       options={{
         headerTitleAlign: 'center',
         headerTitleStyle: {
           color: '#2e64e5',
-          fontFamily: 'Kufam-SemiBoldItalic',
           fontSize: 18,
         },
         headerStyle: {
           shadowColor: '#fff',
           elevation: 0,
-        },
+        },headerLeft: ()=> null, 
         headerRight: () => (
           <View style={{marginRight: 10}}>
             <FontAwesome5.Button

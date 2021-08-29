@@ -13,6 +13,7 @@ console.log("Auth providerr");
 				firebase.auth().signInWithEmailAndPassword(email,password)
 				.then(()=>{
 					console.log("logged in");
+					console.log(user);
 				})
 					alert(email+''+password);
 				}catch(err){
@@ -24,10 +25,18 @@ console.log("Auth providerr");
         	console.log(email+''+password); 
 	},
  logout: async () => {
-          console.log("hi");
+          console.log("loggin out");
+		  try {
+            await firebase.auth().signOut();
+          } catch (e) {
+            console.log(e);
+          }
         },
       }}>
       {children}
     </AuthContext.Provider>
 	);
-}
+	console.log(user);
+};
+
+export default AuthProvider;
