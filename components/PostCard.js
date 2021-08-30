@@ -1,16 +1,21 @@
-import React from 'react';
-import {ImageBackground,Text,View,StyleSheet} from 'react-native';
+import React,{useContext,useState} from 'react';
+import {ImageBackground,Text,View,StyleSheet, Touchable, TouchableOpacity} from 'react-native';
 import {Container, Card,UserInfo,UserImg,UserInfoText,PostTime,UserName,InteractionWrapper,Interaction,InteractionText, PostText, PostImg,Divider} from '../styles/FeedStyles';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-
-const PostCard=({item})=>{
+import { AuthenticatedUserContext } from '../navigation/AuthenticatedUserProvider';
+import moment from 'moment';
+const PostCard=({item,onDelete,onPress})=>{
+      const { user,setUser } = useContext(AuthenticatedUserContext);
+const [username,setUsername] = useState(item['item'].userName);
 console.log(item['item'].userName);
 console.log(item['item'].postImg);
 console.log(item['item'].postImg=="none");
+console.log(item['item'].id);
 
-likeIcon=item['item'].liked ? 'heart' : 'heart-outline';
-likeIconColor=item['item'].liked ? '#2e64e5' : '#333';
-
+console.log(item['item'].liked);
+const likeIcon=item['item'].liked ? 'heart' : 'heart-outline';
+const likeIconColor=item['item'].liked ? '#2e64e5' : '#333';
+console.log("item time",moment(item['item'].postTime.toDate()).fromNow());
 if(item.likes==1){
  likeText = '1 Like'
 } else if(item.likes>1){
@@ -29,26 +34,43 @@ commentText = item.comments+ ' Comments';
       return(
 <Card>
 <UserInfo>
-   <UserImg source={item['item'].userImg}/>
-   <UserInfoText>
-        <UserName>{item['item'].userName}</UserName>
-        <PostTime>{item['item'].postTime}</PostTime>
-    </UserInfoText>
-</UserInfo>
+   <UserImg source={{uri:item ? item['item'].userImg  ||
+                'https://lh5.googleusercontent.com/-b0PKyNuQv5s/AAAAAAAAAAI/AAAAAAAAAAA/AMZuuclxAM4M1SCBGAO7Rp-QP6zgBEUkOQ/s96-c/photo.jpg'
+              : 'https://lh5.googleusercontent.com/-b0PKyNuQv5s/AAAAAAAAAAI/AAAAAAAAAAA/AMZuuclxAM4M1SCBGAO7Rp-QP6zgBEUkOQ/s96-c/photo.jpg',
+}}/>
+     <UserInfoText>
+      <TouchableOpacity >  
+            <UserName>
+            {username}
+      {/* {item ? item['item'].userName  : null} */}
+            
+            </UserName>
+            </TouchableOpacity>
+          <PostTime>{moment(item['item'].postTime.toDate()).fromNow()}</PostTime>  
+   </UserInfoText>  
 
-<PostText>{item['item'].postText}</PostText>
-{item['item'].postImg=="none" ? <Divider/> : <PostImg source={item['item'].postImg} /> }
-{/*<PostImg source={userImg}/>*/}
-<InteractionWrapper>
+ </UserInfo> 
+
+ <PostText>{item['item'].postText}</PostText>
+{item['item'].postImg==null ? <Divider/> : <PostImg source={{uri:item['item'].postImg}} /> }
+ <InteractionWrapper>
 <Interaction active={item['item'].liked}>
 <Ionicons name={likeIcon} size={25} color={likeIconColor}/>
-<InteractionText active={item['item'].liked}>{item['item'].likes}</InteractionText>
+<InteractionText active={item['item'].liked}>{item['item'].likes}{likeText}</InteractionText>
 </Interaction>
-<Interaction>
+<Interaction >
 <Ionicons name='md-chatbubble-outline' size={25}/>
-<InteractionText>{item['item'].comments}</InteractionText>
+<InteractionText>{item['item'].comments}{commentText}</InteractionText>
 </Interaction>
-</InteractionWrapper>
+{
+      user.uid==item['item'].userId ?
+
+<Interaction onPress={()=>{
+      onDelete(item['item'].id)}
+      }>
+<Ionicons name='md-trash-bin' size={25}/>
+</Interaction> : null}
+</InteractionWrapper>  
 
 </Card>
 

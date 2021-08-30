@@ -8,16 +8,18 @@ import PostCard from '../components/PostCard';
 import {AuthContext} from '../navigation/AuthProvider';
 //import ImagePicker from 'react-native-image-crop-picker';
 import * as ImagePicker from 'expo-image-picker';
+import Firebase from '../FirebaseApi';
 
-import "firebase/firestore";
-import "firebase/storage";
 import * as firebase from 'firebase';
+import { AuthenticatedUserContext } from '../navigation/AuthenticatedUserProvider';
 
-//import firestore from '@react-native-firebase/firestore';
-const AddPostScreen=()=>{
-console.log(AuthContext);
-  const {user,logout} = useContext(AuthContext);
-  console.log(user);
+//const auth = Firebase.auth();
+const AddPostScreen=({navigation})=>{
+  console.log("add post");
+  
+//console.log(AuthContext);
+const { user,setUser } = useContext(AuthenticatedUserContext);
+console.log(user);
   const [image, setImage] = useState(null);
   const [uploading, setUploading] = useState(false);
   const [transferred, setTransferred] = useState(0);
@@ -25,20 +27,18 @@ console.log(AuthContext);
 
   console.log('AddPostScreen',user,user.uid);
   const options={mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: true,
-      aspect: [4, 3],
+      // allowsEditing: true,
+      // aspect: [4, 3],
+      base64:true,
       quality: 1,
   }
 
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync(options);
-    console.log(result);
+  //  console.log(result);
     if (!result.cancelled) {
+      console.log(result.uri);
       setImage(result.uri);
-      const response = await fetch(result.uri);
-  const blob = await response.blob();
-  var ref = firebase.storage().ref().child("my-image");
-  return ref.put(blob);
     }
   };
   const clickImage = async () => {
@@ -48,37 +48,98 @@ console.log(AuthContext);
       setImage(result.uri);
     }
   };
+  function DataURIToBlob(dataURI) {
+    const splitDataURI = dataURI.split(',')
+    const byteString = splitDataURI[0].indexOf('base64') >= 0 ? atob(splitDataURI[1]) : decodeURI(splitDataURI[1])
+    const mimeString = splitDataURI[0].split(':')[1].split(';')[0]
 
+    const ia = new Uint8Array(byteString.length)
+    for (let i = 0; i < byteString.length; i++)
+        ia[i] = byteString.charCodeAt(i)
+
+    return new Blob([ia], { type: mimeString })
+  }
+  const makePost = async ()  => {
+    console.log("Image BASE64");
+    let imageUri = result ? `data:image/jpg;base64,${result.base64}` : null;
+    if(imageUri){
+      console.log({uri: imageUri});  
+    }
+   // const res = image;
+   const file = DataURIToBlob(imageUri)
+   const formData = new FormData();
+   formData.append('image', file, 'image.jpg') 
+  //  formData.append('profile_id', this.profile_id) //other param
+   
+  console.log(formData);
+
+    try{
+      //  // console.log(image);
+      //   let photo = {
+      //       uri: image.uri,
+      //       type: 'image/*',
+
+      //   };
+      //   console.log('photo');
+      //   console.log(photo);
+      //   postForm.append('photo', photo);
+
+        let response = await fetch('https://localhost:8000/posts/',
+            {
+                method: 'POST',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'multipart/form-data'
+                },
+                body: formData
+            });
+        console.log('response');
+        console.log(response);
+        let json = await response.json();
+        console.log('response json post');
+        console.log(json);
+
+
+    } catch (error){
+        console.log('error posting');
+        console.log(error);
+       
+    }
+ };
+ 
     
   
   const submitPost = async () => {
     console.log("submit");
-    const imageUrl = await uploadImage();
-    console.log('Image Url: ', imageUrl);
-    console.log('Post: ', post);
-    const dbh = firebase.firestore();
+    makePost();
+  
+    // const imageUrl = await uploadImage();
+    // console.log('Image Url: ', imageUrl);
+    // console.log('Post: ', post);
+    // const dbh = firebase.firestore();
 
-    dbh
-    .collection('posts')
-    .add({
-      userId: "1",
-      post: post,
-      postImg: imageUrl,
-     // postTime: firebase.firestore().Timestamp.fromDate(new Date()),
-      likes: null,
-      comments: null,
-    })
-    .then(() => {
-      console.log('Post Added!');
-      Alert.alert(
-        'Post published!',
-        'Your post has been published Successfully!',
-      );
-      setPost(null);
-    })
-    .catch((error) => {
-      console.log('Something went wrong with added post to firestore.', error);
-    });
+    // await dbh
+    // .collection('posts')
+    // .add({
+    //   userId: user.uid,
+    //   post: post,
+    //   postImg: imageUrl,
+    //   postTime: firebase.firestore.FieldValue.serverTimestamp(),
+    //   likes: null,
+    //   comments: null,
+    // })
+    // .then(() => {
+    //   console.log('Post Added!');
+    //   Alert.alert(
+    //     'Post published!',
+    //     'Your post has been published Successfully!',
+    //   );
+    //   setPost(null);
+    // })
+    // .catch((error) => {
+    //   console.log('Something went wrong with added post to firestore.', error);
+    // });
+    // navigation.replace('SOCIAL');
   }
 
   const uploadImage = async () => {
@@ -88,6 +149,8 @@ console.log(AuthContext);
       return null;
     }
     const uploadUri = image;
+    console.log(uploadUri);
+
     let filename = uploadUri.substring(uploadUri.lastIndexOf('/') + 1);
 
     // Add timestamp to File Name
@@ -124,10 +187,10 @@ console.log(AuthContext);
       setUploading(false);
       setImage(null);
 
-      Alert.alert(
-        'Image uploaded!',
-        'Your image has been uploaded to the Firebase Cloud Storage Successfully!',
-      );
+      // Alert.alert(
+      //   'Image uploaded!',
+      //   'Your image has been uploaded to the Firebase Cloud Storage Successfully!',
+      // );
       return url;
 
     } catch (e) {
@@ -142,7 +205,7 @@ console.log(AuthContext);
 return(
   <View style={styles.container}>
       <InputWrapper>
-        {image != null ? <AddImage source={{uri: image}} /> : null}
+        {/* {image != null ? <AddImage source={{uri: image}} /> : null} */}
 
         <InputField
           placeholder="What's on your mind ?"

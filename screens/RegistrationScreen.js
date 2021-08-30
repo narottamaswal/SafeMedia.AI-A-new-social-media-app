@@ -8,6 +8,8 @@ import * as firebase from 'firebase';
 
 const RegistrationScreen = ({navigation}) => {
   const [email, setEmail] = useState();
+
+  const [username1, setUsername1] = useState();
   const [error, setError] = useState("");
   const [password, setPassword] = useState();
   const [confirmPassword, setConfirmPassword] = useState();
@@ -23,6 +25,18 @@ const validate = (text) => {
   setEmail(text);
   console.log("Email is Correct");
   }
+}
+
+const usernameValidatation=(text)=>{
+
+ if(text==""){
+  setError("Please enter username");
+
+ }else{
+ setUsername1(text);
+
+ }
+
 }
 	const register=(email,password,confirmPassword)=>{
     		if(!password || !confirmPassword){
@@ -51,7 +65,16 @@ const validate = (text) => {
                   <Image source={img1} style={styles.logo}/>
 
       <Text style={styles.text}>Create an account</Text>
-
+      
+      <FormInputField
+        labelValue={username1}
+        onChangeText={(username1) => usernameValidatation(username1)}
+        placeholderText="Username"
+        iconType="user"
+        // keyboardType="email-address"
+        autoCapitalize="none"
+        autoCorrect={false}
+      />
       <FormInputField
         labelValue={email}
         onChangeText={(userEmail) => validate(userEmail)}

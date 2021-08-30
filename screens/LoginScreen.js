@@ -10,11 +10,19 @@ import AppStack from '../navigation/AppStack';
 import * as firebase from 'firebase';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+import Firebase from '../FirebaseApi';
+
+const auth = Firebase.auth();
+
 const LoginScreen = ({navigation})=>{
  const [isLogined,setIsLogined]=useState(null);
  const [isFirstLaunch,setIsFirstLaunch]=useState(null);
 
  const [error,setError]=useState("");
+ console.log("ji");
+ console.log(navigation);
+ const [email,setEmail] = useState();
+ const [password,setPassword] = useState();
 
   useEffect(()=>{
     AsyncStorage.getItem('logined').then(value=>{
@@ -30,16 +38,19 @@ const LoginScreen = ({navigation})=>{
     });
   },[]);
 
-
-
-  console.log("ji");
-  console.log(navigation);
-  const [email,setEmail] = useState();
-  const [errors,setErrors] = useState();
-  const [password,setPassword] = useState();
 	
+  const onLogin = async (email,password) => {
+    try {
+      if (email !== '' && password !== '') {
+        await auth.signInWithEmailAndPassword(email, password);
+      }
+    } catch (error) {
+      setError(error.message);
+      console.log(error.message);
+    }
+  };
 	const login=(email,password)=>{
-	firebase.auth().signInWithEmailAndPassword(email,password)
+	auth.signInWithEmailAndPassword(email,password)
 	.then(()=>{
 		navigation.replace('AppStack');
 	}).catch((e)=>{
@@ -59,7 +70,7 @@ const LoginScreen = ({navigation})=>{
             
             setEmail(userEmail); 
             if(userEmail.length<6){
-              setErrors("email should be 6 letters");
+              setError("email should be 6 letters");
             }   
             
           }} 

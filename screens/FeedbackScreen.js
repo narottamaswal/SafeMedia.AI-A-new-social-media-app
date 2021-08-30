@@ -2,25 +2,54 @@ import { Button } from 'native-base';
 import React,{useContext} from 'react';
 import {Text,View,StyleSheet} from 'react-native';
 import FormButton from '../components/FormButton';
-import {AuthContext} from '../navigation/AuthProvider';
+import * as firebase from 'firebase';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+import Firebase from '../FirebaseApi';
+import { AuthenticatedUserContext } from '../navigation/AuthenticatedUserProvider';
+import { useState } from 'react';
+import { useEffect } from 'react/cjs/react.development';
+
+const auth = Firebase.auth();
 const FeedbackScreen=({navigation})=>{
-
-console.log("yede");
-console.log(navigation);
-
-const logout=()=>{
-  navigation.replace('AppStack');
-  AsyncStorage.getItem('logined').then(value=>{
-    if(value){
-      AsyncStorage.setItem('logined','trfalseue');
-      setIsFirstLaunch(true);
+  const [userEmail,setUserEmail]=useState("");
+  const { user,setUser } = useContext(AuthenticatedUserContext);
+  useEffect(()=>{
+    if(user){
+      setUserEmail(user.email);
     }
-  });
-}
+  },[]);
+
+ const handleSignOut = async () => {
+  await auth.signOut()
+  .then(()=>{
+    console.log("logged out");
+    console.log(user);
+    setUser(null);
+    AsyncStorage.removeItem('logined');
+    navigation.replace('Login');
+  })
+  
+   .catch((error)=>{
+    console.log(error);
+  })
+};
+  // const handleSignOut = async () => {
+  //     console.log("logged out");
+  //     await firebase.auth.signOut()
+  //     .then(()=>{
+  //       console.log("logged out");
+  //     })
+  //     .catch((error)=>{
+  //       console.log(error);
+  //     });
+  // };
+
 return(
     <View style={styles.container}>
 	    <Text style={styles.text2} >Feed screen </Text>
-       <Button onPress={logout} ><Text>hello</Text></Button>
+      <Text style={styles.title}>Welcome !{userEmail}</Text>
+       <Button onPress={handleSignOut} ><Text>Logout</Text></Button>
     </View>
 )
 }

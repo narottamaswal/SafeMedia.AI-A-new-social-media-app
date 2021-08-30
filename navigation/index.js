@@ -1,12 +1,13 @@
 import React from 'react';
-import { AuthProvider } from './AuthProvider';
-import Routes from './Routes';
+//import { AuthProvider } from './AuthProvider';
+import { AuthenticatedUserProvider } from './AuthenticatedUserProvider';
+import RootNavigator from './RootNavigator';
 
 const Providers = () => {
   return (
-    <AuthProvider>
-      <Routes />
-    </AuthProvider>
+    <AuthenticatedUserProvider>
+      <RootNavigator />
+    </AuthenticatedUserProvider>
   );
 }
 
