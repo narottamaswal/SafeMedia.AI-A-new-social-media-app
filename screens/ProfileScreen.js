@@ -10,11 +10,12 @@ import {
 } from 'react-native';
 import FormButton from '../components/FormButton';
 import { AuthenticatedUserContext } from '../navigation/AuthenticatedUserProvider';
+import * as firebase from 'firebase';
 
 import PostCard from '../components/PostCard';
 
 const ProfileScreen = ({navigation, route}) => {
-  const {user, logout} = useContext(AuthContext);
+  const {user, logout} = useContext(AuthenticatedUserContext);
 
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -61,7 +62,7 @@ const ProfileScreen = ({navigation, route}) => {
 
 
   const getUser = async() => {
-    await firestore()
+    await firebase.firestore()
     .collection('users')
     .doc( route.params ? route.params.userId : user.uid)
     .get()

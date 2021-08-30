@@ -4,7 +4,7 @@ import {SafeAreaView, View, StyleSheet, FlatList, Text} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import FeedbackScreen from '../screens/FeedbackScreen';
 import MessageScreen from '../screens/MessageScreen';
-//import ProfileScreen from '../screens/ProfileScreen';
+import ProfileScreen from '../screens/ProfileScreen';
 import AddPostScreen from '../screens/AddPostScreen';
 import {createStackNavigator} from '@react-navigation/stack';
 
@@ -15,7 +15,7 @@ import {AuthContext} from '../navigation/AuthProvider';
 
 import HomeScreen2 from '../screens/HomeScreen2';
 
-//import EditProfileScreen from '../screens/EditProfileScreen';
+import EditProfileScreen from '../screens/EditProfileScreen';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
@@ -26,29 +26,29 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
-// const ProfileStack = ({navigation}) => (
-//   <Stack.Navigator>
-//     <Stack.Screen
-//       name="Profile"
-//       component={ProfileScreen}
-//       options={{
-//         headerShown: false,
-//       }}
-//     />
-//     <Stack.Screen
-//       name="EditProfile"
-//       component={EditProfileScreen}
-//       options={{
-//         headerTitle: 'Edit Profile',
-//         headerBackTitleVisible: false,
-//         headerTitleAlign: 'center',
-//         headerStyle: {
-//           backgroundColor: '#fff',
-//           shadowColor: '#fff',
-//           elevation: 0,
-//         },
-//       }}/>
-//       </Stack.Navigator>);
+const ProfileStack = ({navigation}) => (
+  <Stack.Navigator>
+    <Stack.Screen
+      name="Profile"
+      component={ProfileScreen}
+      options={{
+        headerShown: false,
+      }}
+    />
+    {/* <Stack.Screen
+      name="EditProfile"
+      component={EditProfileScreen}
+      options={{
+        headerTitle: 'Edit Profile',
+        headerBackTitleVisible: false,
+        headerTitleAlign: 'center',
+        headerStyle: {
+          backgroundColor: '#fff',
+          shadowColor: '#fff',
+          elevation: 0,
+        },
+      }}/> */}
+      </Stack.Navigator>);
 
 const FeedStack = ({navigation}) => (
   <Stack.Navigator>
@@ -155,7 +155,7 @@ const AppStack = () => {
           ),
         })}
       />
-          {/* <Tab.Screen
+          <Tab.Screen
         name="Profile"
         component={ProfileStack}
         options={({route}) => ({
@@ -169,7 +169,7 @@ const AppStack = () => {
             />
           ),
         })}
-      /> */}
+      />
   
       <Tab.Screen
         name="FeedBack"
