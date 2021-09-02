@@ -11,5 +11,30 @@ Proposed System:
 5) Users can keep themselves updated with things happening across the world.
 6) Users can forget about fake security and vulgar contents thereby enjoying a more safer and secure social media experience.
 
+
+Security Enhancements
+Weapon Detection: Used tensorflow object-detection api and label-img to detect weapons.
+Profanity Filter: Used Profanity-filter library to detect vulgar and obscene text.
+Face Detection: Used face recognition library with CNN to recognise faces and prevent identity theft.
+
+API and UI Enhancements
+Django REST API: Used Django rest api to connect react native application to Security Models.
+Registration page: User can register with an account.
+Login Page: User will login using their username and password.
+Home page: Main page of the application.
+User Profile page: User can update and read their profile information.
+Manipulate post: User can add and remove their post.
+Comment Page: User can add comments.
+
 ![alt tag](https://github.com/narottamaswal/Social-Media-App-with-AI/blob/main/images/WhatsApp%20Image%202021-05-13%20at%204.19.09%20PM%20(1).jpeg)
 ![alt tag](https://github.com/narottamaswal/Social-Media-App-with-AI/blob/main/images/WhatsApp%20Image%202021-05-13%20at%204.19.09%20PM.jpeg)
+
+![alt_tag](https://github.com/narottamaswal/Safemedia.AI/blob/main/images/WhatsApp%20Image%202021-05-13%20at%204.19.27%20PM.jpeg)
+![alt_tag](https://github.com/narottamaswal/Safemedia.AI/blob/main/images/WhatsApp%20Image%202021-09-02%20at%203.35.52%20PM%20(5).jpeg)
+![alt_tag](https://github.com/narottamaswal/Safemedia.AI/blob/main/images/WhatsApp%20Image%202021-09-01%20at%204.48.50%20AM%20(1).jpeg)
+![alt_tag](https://github.com/narottamaswal/Safemedia.AI/blob/main/images/WhatsApp%20Image%202021-09-02%20at%202.55.43%20PM%20(1).jpeg)
+![alt_tag](https://github.com/narottamaswal/Safemedia.AI/blob/main/images/WhatsApp%20Image%202021-09-02%20at%202.55.43%20PM%20(2).jpeg)
+![alt_tag](https://github.com/narottamaswal/Safemedia.AI/blob/main/images/WhatsApp%20Image%202021-09-02%20at%203.44.45%20PM.jpeg)
+![alt_tag](https://github.com/narottamaswal/Safemedia.AI/blob/main/images/WhatsApp%20Image%202021-09-02%20at%203.35.52%20PM%20(5).jpeg)
+
+
