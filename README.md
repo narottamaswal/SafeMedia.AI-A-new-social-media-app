@@ -1,4 +1,4 @@
-# SafeMedia.AI [Download APP](https://exp-shell-app-assets.s3.us-west-1.amazonaws.com/android/%40narottam/SafeMedia-AI-b3a21e30652747a583df542016bcadb8-signed.apk)
+# SafeMedia.AI [Download APP](https://drive.google.com/file/d/1B5OYz2MLnfElOWNUKDfrdJCrhQuWtuwX/view?usp=sharing)
 ## A new, safe, and cross-platform social media application
 
 A new and safe social media that uses machine learning and deep learning to detect fake profiles.
