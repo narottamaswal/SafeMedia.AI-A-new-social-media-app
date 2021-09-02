@@ -1,4 +1,4 @@
-# Social-Media-App-with-AI
+# SafeMedia.I
 ## A new, safe, and cross-platform social media application
 
 A new and safe social media that uses machine learning and deep learning to detect fake profiles.
