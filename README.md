@@ -1,4 +1,6 @@
 # Social-Media-App-with-AI
+## A new safe, and cross-platform social media application
+
 A new and safe social media that uses machine learning and deep learning to detect fake profiles.
 
 This project is about creating a more secure social media application for the users. The project is aimed to reduce the distance between users and bring them closer with help of technology in a more secure manner. This application will not only help users to connect to other peoples across the world but also reduce cybercrime by providing users with a safer social media experience.
